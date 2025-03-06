@@ -1,3 +1,4 @@
+<!-- templates/layout.html -->
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -22,10 +23,11 @@
           <li class="nav-item">
             <a href="{{ url_for('prodcest蓝图.prodcest首页') }}" class="nav-link">Prodcest (会员区)</a>
           </li>
-          <!-- 如果导航中需要直接链接到朗读功能，则用完整端点 -->
+          <!-- 链接到朗读模块(完整端点: prodcest蓝图.朗读蓝图.朗读首页) -->
           <li class="nav-item">
             <a href="{{ url_for('prodcest蓝图.朗读蓝图.朗读首页') }}" class="nav-link">Read Aloud</a>
           </li>
+
           {% if current_user.is_authenticated %}
           <li class="nav-item">
             <a href="{{ url_for('会员蓝图.登出') }}" class="nav-link">Logout</a>

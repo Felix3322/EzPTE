@@ -1,10 +1,10 @@
 {% extends "layout.html" %}
 {% block body %}
-  <h2>Prodcest Member Area</h2>
-  <p>This is the main page of Prodcest.</p>
-  <ul>
-    <!-- 使用完整端点名称 -->
-    <li><a href="{{ url_for('prodcest蓝图.朗读蓝图.朗读首页') }}">Read Aloud</a></li>
-    <li><a href="{{ url_for('prodcest蓝图.高级口语蓝图.高级口语首页') }}">Oral Advanced</a></li>
-  </ul>
+<h2>Prodcest Member Area</h2>
+<p>This is the main page of Prodcest.</p>
+<ul>
+  <li><a href="{{ url_for('prodcest蓝图.朗读蓝图.朗读首页') }}">Read Aloud</a></li>
+  <!-- 你如果要有 Oral Advanced功能，需要同样 register_blueprint -->
+  <!--<li><a href="{{ url_for('prodcest蓝图.高级口语蓝图.高级口语首页') }}">Oral Advanced</a></li>-->
+</ul>
 {% endblock %}

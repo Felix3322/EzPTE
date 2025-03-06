@@ -1,9 +1,11 @@
 {% extends "layout.html" %}
 {% block body %}
-  <h2>Prodcest Member Area</h2>
-  <p>This is the main page of Prodcest.</p>
+<div class="text-center">
+  <h1>Welcome to My PTE Site</h1>
+  <p>Here you can do various practice activities.</p>
   <ul>
-    <li><a href="{{ url_for('prodcest蓝图.朗读蓝图.朗读首页') }}">Read Aloud</a></li>
-    <li><a href="{{ url_for('prodcest蓝图.高级口语蓝图.高级口语首页') }}">Oral Advanced</a></li>
+    <li><a href="{{ url_for('prodcest蓝图.prodcest首页') }}">Prodcest (Member Zone)</a></li>
+    <li><a href="{{ url_for('prodcest蓝图.朗读蓝图.朗读首页') }}">Go to Read Aloud</a></li>
   </ul>
+</div>
 {% endblock %}

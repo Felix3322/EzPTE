@@ -1,4 +1,5 @@
 # membership.py
+
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin, current_user
@@ -12,7 +13,6 @@ from functools import wraps
 加密器 = Bcrypt()
 登录管理 = LoginManager()
 
-# 用户模型，包含会员状态
 class 用户表(数据库.Model, UserMixin):
     id = 数据库.Column(数据库.Integer, primary_key=True)
     用户名 = 数据库.Column(数据库.String(20), unique=True, nullable=False)
@@ -26,14 +26,13 @@ def 加载用户(user_id):
 def 创建数据库():
     数据库.create_all()
 
-# 定义用户管理蓝图（登录、注册、登出）
 会员蓝图 = Blueprint('会员蓝图', __name__, template_folder='templates/membership')
 
 class 注册表单(FlaskForm):
     用户名 = StringField("用户名", validators=[DataRequired(), Length(min=2, max=20)])
     密码 = PasswordField("密码", validators=[DataRequired(), Length(min=6)])
     确认密码 = PasswordField("确认密码", validators=[DataRequired(), EqualTo('密码', "两次密码不一致")])
-    是否会员 = BooleanField("开通会员")  # 简单示例
+    是否会员 = BooleanField("开通会员")
     提交 = SubmitField("注册")
 
 class 登录表单(FlaskForm):
@@ -78,7 +77,6 @@ def 登出():
     flash("您已退出登录", "info")
     return redirect(url_for('首页'))
 
-# 会员专属装饰器：要求已登录且为会员
 def 会员专属(功能):
     @wraps(功能)
     def 包装(*args, **kwargs):

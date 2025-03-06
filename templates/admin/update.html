@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block body %}
+<h2>更新用户密码 - 用户：{{ 用户.用户名 }}</h2>
+<form method="POST">
+  <div class="mb-3">
+    <label for="new_password" class="form-label">新密码</label>
+    <input type="password" class="form-control" id="new_password" name="new_password" required>
+  </div>
+  <button type="submit" class="btn btn-primary">更新</button>
+</form>
+{% endblock %}

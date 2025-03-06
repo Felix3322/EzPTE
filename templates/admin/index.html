@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block body %}
+<h2>后台管理 - 用户列表</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>用户名</th>
+      <th>是否会员</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in 用户列表 %}
+    <tr>
+      <td>{{ user.id }}</td>
+      <td>{{ user.用户名 }}</td>
+      <td>{{ '是' if user.是否会员 else '否' }}</td>
+      <td><a href="{{ url_for('admin_bp.update_user', user_id=user.id) }}">更新密码</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
