@@ -1,0 +1,23 @@
+<!-- templates/membership/login.html -->
+{% extends "layout.html" %}
+{% block body %}
+<div class="row justify-content-center">
+  <div class="col-md-4">
+    <h3 class="text-center">Login</h3>
+    <form method="POST">
+      {{ form.hidden_tag() }}
+      <div class="mb-3">
+        {{ form.用户名.label }}
+        {{ form.用户名(class="form-control") }}
+      </div>
+      <div class="mb-3">
+        {{ form.密码.label }}
+        {{ form.密码(class="form-control") }}
+      </div>
+      <div class="d-grid">
+        {{ form.提交(class="btn btn-primary") }}
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

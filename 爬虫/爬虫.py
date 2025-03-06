@@ -42,10 +42,10 @@ cookies = driver.get_cookies()
 cookie_header = "; ".join([f"{cookie['name']}={cookie['value']}" for cookie in cookies])
 
 # Directories to save files
-base_dir = "../资源"
-audio_dir = os.path.join(base_dir, "音频资源/podcast/read-aloud")
-text_en_dir = os.path.join(base_dir, "文字资源/podcast/read-aloud/英文")
-text_cn_dir = os.path.join(base_dir, "文字资源/podcast/read-aloud/中文")
+base_dir = "../resources"
+audio_dir = os.path.join(base_dir, "podcast/read-aloud/audio")
+text_en_dir = os.path.join(base_dir, "podcast/read-aloud/text/en")
+text_cn_dir = os.path.join(base_dir, "podcast/read-aloud/text/zh")
 
 os.makedirs(audio_dir, exist_ok=True)
 os.makedirs(text_en_dir, exist_ok=True)
