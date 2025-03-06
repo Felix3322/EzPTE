@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音频系统</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+    <header>
+        <h1>音频系统</h1>
+        <nav>
+            <ul>
+                <li><a href="/">首页</a></li>
+                <li><a href="/podcast/read-aloud">朗读音频</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% include 内容模板 %}
+    </main>
+
+    <footer>
+        <p>版权所有 &copy; 2025</p>
+    </footer>
+</body>
+</html>

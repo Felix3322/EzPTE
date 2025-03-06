@@ -8,12 +8,15 @@ import requests
 import os
 import time
 import random
+import subprocess
+
+# Ensure no existing Chrome process is running
+subprocess.run("taskkill /F /IM chrome.exe", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 # Set up Selenium WebDriver
 chrome_options = Options()
 chrome_options.add_argument("--disable-gpu")
 chrome_options.add_argument("--window-size=1920x1080")
-chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--remote-debugging-port=9222")
 chrome_options.add_argument("--disable-software-rasterizer")
@@ -24,10 +27,7 @@ chrome_options.add_argument("--disable-features=NetworkService,NetworkServiceInP
 
 # Use real Chrome profile
 chrome_options.add_argument(r"--user-data-dir=C:\Users\felix\AppData\Local\Google\Chrome\User Data")
-chrome_options.add_argument("--profile-directory=Default")  # Use actual profile from chrome://version/
-
-# Kill any running Chrome instances before launching
-os.system("taskkill /F /IM chrome.exe >nul 2>&1")
+chrome_options.add_argument("--profile-directory=web crawler")  # Adjust based on chrome://version/
 
 # Initialize WebDriver
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
@@ -41,9 +41,15 @@ time.sleep(3)  # Wait for the page to load
 cookies = driver.get_cookies()
 cookie_header = "; ".join([f"{cookie['name']}={cookie['value']}" for cookie in cookies])
 
-# Directory to save files
-save_dir = "音频资源/podcast/read-aloud"
-os.makedirs(save_dir, exist_ok=True)
+# Directories to save files
+base_dir = "../资源"
+audio_dir = os.path.join(base_dir, "音频资源/podcast/read-aloud")
+text_en_dir = os.path.join(base_dir, "文字资源/podcast/read-aloud/英文")
+text_cn_dir = os.path.join(base_dir, "文字资源/podcast/read-aloud/中文")
+
+os.makedirs(audio_dir, exist_ok=True)
+os.makedirs(text_en_dir, exist_ok=True)
+os.makedirs(text_cn_dir, exist_ok=True)
 
 
 def download_audio(audio_url, file_name):
@@ -77,10 +83,36 @@ try:
         for audio in audio_elements:
             audio_url = audio.get_attribute("src")
             if audio_url and "mp3" in audio_url:
-                file_name = os.path.join(save_dir, os.path.basename(audio_url))
-                if not os.path.exists(file_name):  # Avoid duplicate downloads
+                file_name = os.path.basename(audio_url)
+                audio_path = os.path.join(audio_dir, file_name)
+                text_en_path = os.path.join(text_en_dir, file_name.replace(".mp3", ".txt"))
+                text_cn_path = os.path.join(text_cn_dir, file_name.replace(".mp3", ".txt"))
+
+                # Get English text
+                try:
+                    english_text_element = driver.find_element(By.XPATH,
+                                                               "/html/body/div[1]/div/main/div/div/div/div[2]/div/div/div/div[2]/span[1]")
+                    english_text = english_text_element.text.strip()
+                    with open(text_en_path, "w", encoding="utf-8") as f:
+                        f.write(english_text)
+                except Exception as e:
+                    print(f"Failed to get English text: {e}")
+                    continue
+
+                # Get Chinese text
+                try:
+                    chinese_text_element = driver.find_element(By.XPATH, "//span[contains(@class, 'text-gray-600')]")
+                    chinese_text = chinese_text_element.text.strip()
+                    with open(text_cn_path, "w", encoding="utf-8") as f:
+                        f.write(chinese_text)
+                except Exception as e:
+                    print(f"Failed to get Chinese text: {e}")
+                    continue
+
+                # Download audio
+                if not os.path.exists(audio_path):  # Avoid duplicate downloads
                     print(f"Downloading: {audio_url}")
-                    download_audio(audio_url, file_name)
+                    download_audio(audio_url, audio_path)
 
         # Click the "Next" button to load a new question
         try:
@@ -93,7 +125,7 @@ try:
             break
 
         # Randomized delay to avoid detection
-        time.sleep(random.uniform(0.8, 1.2))
+        time.sleep(random.uniform(0.3, 0.8))
 
 except KeyboardInterrupt:
     print("Download interrupted by user. Exiting.")

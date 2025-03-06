@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>朗读音频</title>
+    <link rel="stylesheet" href="{{ url_for('朗读.static', filename='read_aloud/style.css') }}">
+</head>
+<body>
+    <h1>朗读音频</h1>
+
+    <div id="播放器">
+        <audio id="音频播放器" controls></audio>
+        <button id="上一条">上一条</button>
+        <button id="下一条">下一条</button>
+    </div>
+
+    <div id="文本显示">
+        <h2>中文</h2>
+        <p id="中文文本">请选择音频</p>
+        <h2>英文</h2>
+        <p id="英文文本">Please select an audio file.</p>
+    </div>
+
+    <h2>音频列表</h2>
+    <ul id="音频列表"></ul>
+
+    <script src="{{ url_for('朗读.static', filename='read_aloud/script.js') }}"></script>
+</body>
+</html>
