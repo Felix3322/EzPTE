@@ -15,7 +15,7 @@ import os
 @login_required
 @会员专属
 def 朗读首页():
-    return render_template('index.html')  # 对应 templates/prodcest/read_aloud/index.html
+    return render_template('index.html')
 
 @朗读蓝图.route('/list', methods=['GET'])
 @login_required

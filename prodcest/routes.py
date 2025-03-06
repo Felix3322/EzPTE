@@ -8,8 +8,6 @@ from prodcest.read_aloud.routes import 朗读蓝图
 from prodcest.oral.advanced.routes import 高级口语蓝图
 
 prodcest蓝图 = Blueprint("prodcest蓝图", __name__, template_folder='templates/prodcest')
-
-# 注册子蓝图，URL 前缀均为英文
 prodcest蓝图.register_blueprint(朗读蓝图, url_prefix='/read-aloud')
 prodcest蓝图.register_blueprint(高级口语蓝图, url_prefix='/oral/advanced')
 
